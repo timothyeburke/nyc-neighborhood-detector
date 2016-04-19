@@ -86,7 +86,7 @@ function ready() {
             var oldNeighborhood
             var newNeighborhood
 
-            for (var i = 0 i < newLocationData.length i++) {
+            for (var i = 0; i < newLocationData.length; i++) {
                 var neighborhood = newLocationData[i]
                 if (inside(loc, neighborhood.c)) {
                     newNeighborhood = neighborhood
