@@ -1,0 +1,35 @@
+<!doctype html>
+<body>
+    <head>
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <title>DC Neighborhood Locator</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                padding-top: 100px;
+                text-align: center;
+            }
+
+            #reload {
+                background-color: #eee;
+                border-radius: 5px;
+                bottom: 10px;
+                color: #666;
+                font-size: 20px;
+                font-weight: bold;
+                height: 60px;
+                left: 10px;
+                line-height: 60px;
+                position: absolute;
+                right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content"></div>
+        <div id="reload" onclick="ready()">Reload</div>
+        <script src="app.js"></script>
+    </body>
+</body>
