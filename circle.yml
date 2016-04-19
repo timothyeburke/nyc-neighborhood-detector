@@ -1,0 +1,5 @@
+deployment:
+  aws:
+    branch: master
+    commands:
+      - aws s3 sync site/ s3://dc.timburke.co/
