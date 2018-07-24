@@ -1,5 +1,13 @@
 var locating = false
 
+var boroughs = [
+    'Manhattan',
+    'Bronx',
+    'Brooklyn',
+    'Queens',
+    'Staten Island'
+]
+
 function inside(point, vs) {
     // ray-casting algorithm based on
     // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
@@ -73,43 +81,30 @@ function ready() {
     setContent('<h1>Locating...</h1>')
 
     Promise.all([
-        get('dc-updated.min.json'),
-        get('dc.min.json'),
+        get('nyc.json'),
         position()
     ]).then(
         function(data) {
-            var newLocationData = data[0]
-            var oldLocationData = data[1]
-            var position = data[2]
+            var locations = data[0]
+            var position = data[1]
             var loc = [position.coords.longitude, position.coords.latitude]
 
-            var oldNeighborhood
-            var newNeighborhood
+            var location
 
-            for (var i = 0; i < newLocationData.length; i++) {
-                var neighborhood = newLocationData[i]
+            for (var i = 0; i < locations.length; i++) {
+                var neighborhood = locations[i]
+                console.log(neighborhood.c)
                 if (inside(loc, neighborhood.c)) {
-                    newNeighborhood = neighborhood
+                    location = neighborhood
                     break
                 }
             }
 
-            for (var i = 0; i < oldLocationData.length; i++) {
-                var neighborhood = oldLocationData[i]
-                if (inside(loc, neighborhood.c)) {
-                    oldNeighborhood = neighborhood
-                    break
-                }
+            if (!location) {
+                return Promise.reject('I don\'t think you\'re in NYC.')
             }
 
-            if (!newNeighborhood && !oldNeighborhood) {
-                return Promise.reject('I don\'t think you\'re in DC.')
-            }
-
-            var name = newNeighborhood ? newNeighborhood.n : oldNeighborhood.n
-            var quadrant = oldNeighborhood.q
-
-            setContent('<h1>' + quadrant + ' DC</h1><h1>' + name + '</h1>')
+            setContent('<h1>' + boroughs[location.b - 1] + '</h1><h1>' + location.n + '</h1>')
         }
     ).catch(
         function(error) {
